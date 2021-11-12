@@ -1,12 +1,12 @@
 import Button from "./Atoms/Button";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
-import Input from "./Atoms/Input";
+import ErrorComponent from "./Atoms/ErrorComponent";
 
 const initialValues = {
   userName: "",
   email: "",
-  address :""
+  address: "",
 };
 
 const onSubmit = (values) => {
@@ -16,7 +16,7 @@ const onSubmit = (values) => {
 const validationSchema = Yup.object({
   userName: Yup.string().required("Enter Name"),
   email: Yup.string().required("Enter Email").email("email must be"),
-  address:Yup.string().required('Pleae Enter address')
+  address: Yup.string().required("Pleae Enter address"),
 });
 const RegistrationForm = () => {
   return (
@@ -34,9 +34,7 @@ const RegistrationForm = () => {
               name="userName"
             />
             <ErrorMessage name="userName">
-            {(error) => {
-               return <p className="text-danger">{error}</p>;
-              }}
+              {(error) => <ErrorComponent error={error} />}
             </ErrorMessage>
             <Field
               className="form-control mb-5 mt-3 "
@@ -44,18 +42,9 @@ const RegistrationForm = () => {
               name="email"
             />
             <ErrorMessage name="email">
-              {(error) => {
-               return <p className="text-danger">{error}</p>;
-              }}
+              {(error) => <ErrorComponent error={error} />}
             </ErrorMessage>
-            {/* 
-                this is also way to creat our own elelmetn by using as or second is next method below
-            <Field
-              as="textarea"
-              className="form-control mb-5 mt-3 "
-              placeholder="Email"
-              name="textarea"
-            /> */}
+
             <Field name="address">
               {(props) => {
                 const { field, form, meta } = props;
@@ -67,7 +56,11 @@ const RegistrationForm = () => {
                       name="address"
                       {...field}
                     />
-                    {meta.touched && meta.error ? <p className="text-danger">{meta.error}</p> : "null"}
+                    {meta.touched && meta.error ? (
+                      <p className="text-danger">{meta.error}</p>
+                    ) : (
+                      "null"
+                    )}
                   </>
                 );
               }}
@@ -84,3 +77,15 @@ const RegistrationForm = () => {
 };
 
 export default RegistrationForm;
+{
+  /* 
+    this is also way to creat our own elelmetn by using as or second is next method below
+           
+    <Field
+              as="textarea"
+              className="form-control mb-5 mt-3 "
+              placeholder="Email"
+              name="textarea"
+            /> 
+*/
+}
