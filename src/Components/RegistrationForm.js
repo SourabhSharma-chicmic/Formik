@@ -30,6 +30,8 @@ const RegistrationForm = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      validateOnChange={false}// can control validations onhcnge
+      validateOnBlur={false} // can control validon on blur
     >
       <div className="row align-content-end ">
         <div className="col-md-6 offset-1 bg-dark mt-3">
