@@ -1,5 +1,5 @@
 import Button from "./Atoms/Button";
-import { Formik, Field, ErrorMessage, Form, FieldArray } from "formik";
+import { Formik, Field, ErrorMessage, Form, FieldArray , FastField } from "formik";
 import * as Yup from "yup";
 import ErrorComponent from "./Atoms/ErrorComponent";
 
@@ -49,7 +49,7 @@ const RegistrationForm = () => {
             {/* {(error) => <ErrorComponent error={error} />} */}
             {/* </ErrorMessage> */}
 
-            <Field name="address">
+            <FastField name="address">
               {(props) => {
                 const { field, form, meta } = props;
                 return (
@@ -68,7 +68,7 @@ const RegistrationForm = () => {
                   </>
                 );
               }}
-            </Field>
+            </FastField>
             <br />
             <Field
               name="social.facebook"
