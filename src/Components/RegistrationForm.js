@@ -34,17 +34,15 @@ const RegistrationForm = () => {
               placeholder="UserName"
               name="userName"
             />
-            <ErrorMessage name="userName">
-              {(error) => <ErrorComponent error={error} />}
-            </ErrorMessage>
+            <ErrorMessage name="userName" component={ErrorComponent }/>
             <Field
               className="form-control mb-5 mt-3 "
               placeholder="Email"
               name="email"
             />
-            <ErrorMessage name="email">
-              {(error) => <ErrorComponent error={error} />}
-            </ErrorMessage>
+            <ErrorMessage name="email" component={ErrorComponent }/>
+              {/* {(error) => <ErrorComponent error={error} />} */}
+            {/* </ErrorMessage> */}
 
             <Field name="address">
               {(props) => {
