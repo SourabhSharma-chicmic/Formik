@@ -1,13 +1,18 @@
 import Button from "./Atoms/Button";
-import { Formik, Field, ErrorMessage, Form } from "formik";
+import { Formik, Field, ErrorMessage, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import ErrorComponent from "./Atoms/ErrorComponent";
-
 
 const initialValues = {
   userName: "",
   email: "",
   address: "",
+  social: {
+    facebook: "",
+    twitter: "",
+  },
+  phone: ["", ""],
+  phNumbers: [""],
 };
 
 const onSubmit = (values) => {
@@ -34,14 +39,14 @@ const RegistrationForm = () => {
               placeholder="UserName"
               name="userName"
             />
-            <ErrorMessage name="userName" component={ErrorComponent }/>
+            <ErrorMessage name="userName" component={ErrorComponent} />
             <Field
               className="form-control mb-5 mt-3 "
               placeholder="Email"
               name="email"
             />
-            <ErrorMessage name="email" component={ErrorComponent }/>
-              {/* {(error) => <ErrorComponent error={error} />} */}
+            <ErrorMessage name="email" component={ErrorComponent} />
+            {/* {(error) => <ErrorComponent error={error} />} */}
             {/* </ErrorMessage> */}
 
             <Field name="address">
@@ -65,6 +70,57 @@ const RegistrationForm = () => {
               }}
             </Field>
             <br />
+            <Field
+              name="social.facebook"
+              placeholder="Facebook Id"
+              className="form-control"
+            />
+
+            <br />
+            <Field
+              name="social.twitter"
+              placeholder="Twiiter Id"
+              className="form-control"
+            />
+
+            <br />
+            <Field
+              name="phone[0]"
+              placeholder="Primary phone no"
+              className="form-control"
+            />
+
+            <br />
+            <Field
+              name="phone[1]"
+              placeholder="Secondary phone no"
+              className="form-control"
+            />
+
+            <br />
+            <FieldArray name="phNumbers">
+              {(fieldArrayProp) => {
+                const { push, remove, form } = fieldArrayProp;
+                const { values } = form;
+                const { phNumbers } = values;
+
+                return (
+                  <>
+                    {phNumbers.map((phnumber, index) => {
+                      return (
+                        <div key={index}>
+                         
+                          <Field name={`phNumbers[${index}]`} />
+                          <button type='button' onClick={()=>{remove(index)}}>-</button>
+                          <button type='button' onClick={()=>{push('')}}>+</button>
+                        </div>
+                      );
+                    })}
+                  </>
+                );
+              }}
+            </FieldArray>
+
             <Button type="submit" className="btn btn-danger btn-lg mb-5">
               Submit
             </Button>
