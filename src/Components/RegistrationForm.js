@@ -9,6 +9,7 @@ import {
 } from "formik";
 import * as Yup from "yup";
 import ErrorComponent from "./Atoms/ErrorComponent";
+import { useState } from "react";
 
 const initialValues = {
   userName: "",
@@ -22,13 +23,25 @@ const initialValues = {
   phNumbers: [""],
 };
 
+const savedValues = {
+  userName: "sourabh",
+  email: "s@gmail.com",
+  address: "this is address",
+  social: {
+    facebook: "fb.com",
+    twitter: "tw.com",
+  },
+  phone: ["123466", "321654"],
+  phNumbers: [""],
+};
+
 const onSubmit = (values) => {
   console.log(values);
 };
 
 const validationSchema = Yup.object({
   userName: Yup.string().required("Enter Name"),
- email: Yup.string().required("Enter Email").email("email must be"),
+  email: Yup.string().required("Enter Email").email("email must be"),
   address: Yup.string().required("Pleae Enter address"),
 });
 
@@ -40,13 +53,16 @@ const validationSchema = Yup.object({
 //   return error;
 // };
 const RegistrationForm = () => {
+
+  const [formValues,setFormValues] = useState(null)
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={formValues || initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
-     // validateOnChange={false} // can control validations onhcnge
-     // validateOnBlur={false} // can control validon on blur
+      enableReinitialize
+      // validateOnChange={false} // can control validations onhcnge
+      // validateOnBlur={false} // can control validon on blur
     >
       <div className="row align-content-end ">
         <div className="col-md-6 offset-1 bg-dark mt-3">
@@ -61,7 +77,7 @@ const RegistrationForm = () => {
               className="form-control mb-5 mt-3 "
               placeholder="Email"
               name="email"
-             //  validate= {validateEmail}// by this way we can also set error if we dont wnat to use yup
+              //  validate= {validateEmail}// by this way we can also set error if we dont wnat to use yup
             />
             <ErrorMessage name="email" component={ErrorComponent} />
             {/* {(error) => <ErrorComponent error={error} />} */}
@@ -153,7 +169,9 @@ const RegistrationForm = () => {
                 );
               }}
             </FieldArray>
-
+            <Button onClick={()=>setFormValues(savedValues)} type="button" className="btn btn-danger btn-lg mb-5">
+              Load Save Data
+            </Button>
             <Button type="submit" className="btn btn-danger btn-lg mb-5">
               Submit
             </Button>
